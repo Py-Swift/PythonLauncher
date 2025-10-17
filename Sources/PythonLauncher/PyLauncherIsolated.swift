@@ -78,7 +78,7 @@ extension PyLauncherIsolated {
         }
         
         
-        let python_tag = "3.11"
+        let python_tag = "3.13"
         let python_home = "\(resourcePath)/python"
         print(python_home, FileManager.default.fileExists(atPath: python_home))
         print("PythonHome: \(python_home)")
