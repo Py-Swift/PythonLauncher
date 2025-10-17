@@ -9,7 +9,7 @@ let local = false
 let pykit_package: Package.Dependency = if local {
     .package(path: "/Volumes/CodeSSD/PythonSwiftGithub/PySwiftKit")
 } else {
-    .package(url: "https://github.com/py-swift/PySwiftKit", from: .init(313, 0, 0))
+    .package(url: "https://github.com/py-swift/PySwiftKit", .upToNextMajor(from: .init(313, 0, 0)))
 }
 
 
