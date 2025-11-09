@@ -5,15 +5,23 @@ import PackageDescription
 
 
 let local = false
+let dev = false
 
 let pykit_package: Package.Dependency = if local {
-    .package(path: "/Volumes/CodeSSD/PythonSwiftGithub/PySwiftKit")
+    .package(path: "/Volumes/CodeSSD/PythonSwiftGithub/PySwiftKit_development")
 } else {
-    .package(url: "https://github.com/py-swift/PySwiftKit", .upToNextMajor(from: .init(313, 0, 0)))
+    if dev {
+        .package(url: "https://github.com/py-swift/PySwiftKit", branch: "development")
+    } else {
+        .package(url: "https://github.com/py-swift/PySwiftKit", .upToNextMajor(from: .init(313, 0, 0)))
+    }
 }
 
 
-let pykit: Target.Dependency =  .product(name: "SwiftonizeModules", package: "PySwiftKit")
+let pykit: Target.Dependency =  .product(
+    name: "PySwiftKitBase",
+    package: local ? "PySwiftKit_development" : "PySwiftkit"
+)
 
 
 let package = Package(

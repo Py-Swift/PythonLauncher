@@ -5,7 +5,7 @@
 import Foundation
 import PathKit
 import PySwiftKit
-import PySwiftObject
+//import PySwiftObject
 import PySerializing
 
 public protocol PyLauncherIsolated: PyLauncher {
@@ -208,11 +208,11 @@ func crash_dialog(_ details: String) {
 
 fileprivate func PythonCall<A>(call: PyPointer, _ a: A) throws where
     A: PySerialize {
-    let arg = a.pyPointer
+    let arg = a.pyPointer()
     guard let result = PyObject_CallOneArg(call, arg) else {
         PyErr_Print()
         Py_DecRef(arg)
-        throw PythonError.call
+        throw PyStandardException.typeError
     }
     Py_DecRef(arg)
     Py_DecRef(result)
@@ -222,14 +222,14 @@ fileprivate func PythonCall<A, B>(call: PyPointer, _ a: A, _ b: B) throws where
     A: PySerialize,
     B: PySerialize {
     let args = VectorCallArgs.allocate(capacity: 2)
-    args[0] = a.pyPointer
-    args[1] = b.pyPointer
+    args[0] = a.pyPointer()
+    args[1] = b.pyPointer()
     guard let result = PyObject_Vectorcall(call, args, 2, nil) else {
         PyErr_Print()
         Py_DecRef(args[0])
         Py_DecRef(args[1])
         args.deallocate()
-        throw PythonError.call
+        throw PyStandardException.typeError
     }
     Py_DecRef(args[0])
     Py_DecRef(args[1])

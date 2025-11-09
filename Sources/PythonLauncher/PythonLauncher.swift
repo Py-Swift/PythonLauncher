@@ -5,7 +5,7 @@
 import Foundation
 import PathKit
 import PySwiftKit
-import PySwiftObject
+//import PySwiftObject
 
 
 public protocol PyLauncher: AnyObject {
